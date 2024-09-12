@@ -1,0 +1,201 @@
+// / Function to add a new chapter
+function addNewChapter() {
+  const formSections = document.getElementById("formSections");
+
+  // Create a new section element
+  const newSection = document.createElement("div");
+  newSection.classList.add("form-section", "mb-4", "p-3", "border", "rounded");
+
+  // Create the HTML structure for the new section
+  newSection.innerHTML = `
+    <button
+                type="button"
+                class="btn btn-outline-primary"
+                onclick="addNewChapter()"
+              >
+                + Add New Chapter
+              </button>
+    <div class="text-end">
+      <button
+        type="button"
+        class="btn btn-danger btn-sm"
+        onclick="removeFormSection(this)"
+      >
+        <i class="bi bi-trash"></i> Delete
+      </button>
+    </div>
+
+    <!-- Answer Type Selection -->
+    <div class="mb-3">
+      <label for="answerType" class="form-label">Answer Type</label>
+      <select class="form-select answerType" onchange="changeInputType(this)">
+        <option value="multipleChoice" selected>Multiple choice</option>
+        <option value="dropdown">Dropdown</option>
+        <option value="fileUpload">File upload</option>
+        <option value="linearScale">Linear scale</option>
+      </select>
+    </div>
+
+    <!-- Option List -->
+    <div class="mb-3 option-container">
+      <label class="form-label">Options</label>
+      <div class="optionList">
+        <div class="input-group mb-2">
+          <input type="text" class="form-control" placeholder="Option 1" />
+          <button
+            class="btn btn-outline-secondary"
+            type="button"
+            onclick="removeOption(this)"
+          >
+            Remove
+          </button>
+        </div>
+      </div>
+      <button
+        type="button"
+        class="btn btn-outline-primary"
+        onclick="addOption(this)"
+      >
+        + Add Option
+      </button>
+    </div>
+
+    <!-- File Upload Section (hidden initially) -->
+    <div id="fileUploadSection" class="mb-3 d-none">
+      <label class="form-label">File Upload</label>
+      <div class="file-upload-container p-3 border rounded">
+        <input type="file" class="form-control mb-3" id="fileUpload" multiple />
+        <small class="form-text text-muted">Max 10MB per file, up to 10 files.</small>
+
+        <!-- Max Number of Files -->
+        <div class="mb-3">
+          <label for="maxFiles" class="form-label">Max Number of Files</label>
+          <input type="number" class="form-control" id="maxFiles" placeholder="Enter max number of files" min="1" max="10" />
+        </div>
+
+        <!-- Max File Size -->
+        <div class="mb-3">
+          <label for="maxFileSize" class="form-label">Max File Size (in MB)</label>
+          <input type="number" class="form-control" id="maxFileSize" placeholder="Enter max file size in MB" min="1" max="10" />
+        </div>
+      </div>
+    </div>
+
+    <!-- Required toggle -->
+    <div class="form-check form-switch mb-3">
+      <input class="form-check-input" type="checkbox" />
+      <label class="form-check-label">Required</label>
+    </div>
+  `;
+
+  // Append the new section to the form
+  formSections.appendChild(newSection);
+}
+
+// Function to change the input type (e.g., show file upload fields if selected)
+function changeInputType(selectElement) {
+  const formSection = selectElement.closest(".form-section");
+  const fileUploadSection = formSection.querySelector("#fileUploadSection");
+
+  // Show/hide the file upload section based on the selected answer type
+  if (selectElement.value === "fileUpload") {
+    fileUploadSection.classList.remove("d-none");
+  } else {
+    fileUploadSection.classList.add("d-none");
+  }
+}
+
+// Function to add a new option input with file upload functionality
+function addOption(buttonElement) {
+  const optionContainer = buttonElement.closest(".option-container");
+  const optionList = optionContainer.querySelector(".optionList");
+
+  const optionCount = optionList.children.length + 1; // Get the current number of options
+  const newOption = document.createElement("div");
+  newOption.className = "input-group mb-2";
+
+  newOption.innerHTML = `
+    <input type="text" class="form-control" placeholder="Option ${optionCount}" />
+   
+    <!-- File Upload Button with Icon -->
+    <button class="btn btn-outline-secondary" type="button" onclick="triggerFileUpload(this)">
+      <i class="bi bi-file-earmark-arrow-up"></i> Upload
+    </button>
+   
+    <!-- Hidden file input -->
+    <input type="file" class="file-input d-none" accept="image/*" onchange="handleFileUpload(this)" />
+   
+    <!-- Remove Option Button -->
+    <button class="btn btn-outline-secondary" type="button" onclick="removeOption(this)">
+      Remove
+    </button>
+  `;
+
+  // Append the option to the list
+  optionList.appendChild(newOption);
+
+  // Create a container for file previews (below the option)
+  const filePreviewContainer = document.createElement("div");
+  filePreviewContainer.className = "file-preview-container mt-2";
+  optionList.appendChild(filePreviewContainer); // Add it right after the option
+}
+
+// Function to remove an option input
+function removeOption(buttonElement) {
+  const optionGroup = buttonElement.closest(".input-group");
+  optionGroup.remove();
+}
+
+// Function to remove a form section
+function removeFormSection(buttonElement) {
+  const formSection = buttonElement.closest(".form-section");
+  formSection.remove();
+}
+// Function to trigger file upload when the button is clicked
+// Function to trigger the file upload input
+// Trigger file input when clicking the Upload button
+function triggerFileUpload(button) {
+  const fileInput = button.closest(".input-group").querySelector(".file-input");
+  fileInput.click(); // Simulate click on the hidden file input
+}
+
+// Handle file upload and display the preview
+function handleFileUpload(input) {
+  const file = input.files[0]; // Get the first file
+  if (file) {
+    const reader = new FileReader();
+    reader.onload = function (e) {
+      const previewContainer = input
+        .closest(".form-section")
+        .querySelector(".file-preview-container");
+
+      // Create an img element for the preview
+      const imgPreview = document.createElement("img");
+      imgPreview.src = e.target.result;
+      imgPreview.style.width = "100px"; // Set a fixed width or adjust accordingly
+      imgPreview.className = "me-2"; // Add margin-right for spacing
+
+      // Create a button to remove the image
+      const removeButton = document.createElement("button");
+      removeButton.textContent = "Remove";
+      removeButton.className = "btn btn-danger btn-sm mb-2";
+      removeButton.onclick = function () {
+        imgPreview.remove(); // Remove image preview
+        removeButton.remove(); // Remove the button
+      };
+
+      // Append the image and remove button to the container
+      previewContainer.appendChild(imgPreview);
+      previewContainer.appendChild(removeButton);
+    };
+    reader.readAsDataURL(file); // Read the file and convert it to a Data URL
+  }
+}
+
+// Function to remove an option (including text and file inputs)
+function removeOption(buttonElement) {
+  const optionGroup = buttonElement.closest(".input-group");
+  const filePreviewContainer = optionGroup.nextElementSibling;
+  optionGroup.remove(); // Remove the entire option group from the DOM
+  filePreviewContainer.remove(); // Remove the file preview container
+}

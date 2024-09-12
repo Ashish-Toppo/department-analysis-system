@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Google Form Clone</title>
+    <!-- Bootstrap CSS -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+  <body>
+    <div class="container">
+      <div class="row justify-content-center">
+        <div class="col-lg-8 col-md-10">
+          <div class="form-container">
+            <!-- Form starts here -->
+            <form id="googleForm">
+              <!-- First Form Section -->
+              <div id="">
+                <div class="form-section mb-4 p-3 border rounded">
+                  <!-- Delete Form Section -->
+                  <!-- <div class="text-end">
+                    <button
+                      type="button"
+                      class="btn btn-danger btn-sm"
+                      onclick="removeFormSection(this)"
+                    >
+                      <i class="bi bi-trash"></i> Delete
+                    </button>
+                  </div> -->
+
+                  <!-- Answer Type Selection -->
+                  <div class="mb-3">
+                    <label for="answerType" class="form-label"
+                      >Answer Type</label
+                    >
+                    <div class="input-group mb-2">
+                      <!-- Text input for an addoption -->
+                      <input
+                        type="text"
+                        class="form-control"
+                        placeholder="Type your question here"
+                      />
+                    <select
+                      class="form-select answerType"
+                      onchange="changeInputType(this)"
+                    >
+                      <option value="multipleChoice" selected>
+                        Multiple choice
+                      </option>
+                      <option value="dropdown">Dropdown</option>
+                      <option value="fileUpload">File upload</option>
+                      <option value="linearScale">Linear scale</option>
+                    </select>
+                  </div>
+
+                  <!-- Option List -->
+                  <div class="mb-3 option-container">
+                    <label class="form-label">Options</label>
+                    <div class="optionList">
+                      <div class="input-group mb-2">
+                        <!-- Text input for an option -->
+                        <input
+                          type="text"
+                          class="form-control"
+                          placeholder="Option 1"
+                        />
+
+                        <!-- Button for file upload with a file icon -->
+                        <button
+                          class="btn btn-outline-secondary upload-btn"
+                          type="button"
+                          onclick="triggerFileUpload(this)"
+                        >
+                          <i class="bi bi-file-earmark-arrow-up"></i> Upload
+                        </button>
+
+                        <!-- Hidden file input field for uploading a photo or file -->
+                        <input
+                        type="file"
+                        accept="image/*"
+                        class="file-input d-none"
+                          onchange="handleFileUpload(this)"
+                        />
+
+                        <!-- Remove button to delete option -->
+                        <button
+                          class="btn btn-outline-secondary"
+                          type="button"
+                          onclick="removeOption(this)"
+                        >
+                          Remove
+                        </button>
+                      </div>
+                    </div>
+                   
+                    <div class="file-preview-container mt-2"></div>
+                    <button
+                    type="button"
+                    class="btn btn-outline-primary"
+                    onclick="addOption(this)"
+                  >
+                    + Add Option
+                  </button> 
+                  </div>
+
+                  <!-- File Upload Section -->
+                  <div id="fileUploadSection" class="mb-3 d-none">
+                    <label class="form-label">File Upload</label>
+                    <div class="file-upload-container p-3 border rounded">
+                      <!-- File Uploader Logo -->
+                      <div class="file-uploader-logo text-center mb-3">
+                        <img
+                          src="path_to_your_file_upload_logo.png"
+                          alt="File Uploader"
+                          width="50px"
+                        />
+                      </div>
+
+                      <!-- File Input -->
+                      <input
+                        type="file"
+                        class="form-control mb-3"
+                        id="fileUpload"
+                        multiple
+                      />
+
+                      <!-- Max Number of Files -->
+                      <div class="mb-3">
+                        <label for="maxFiles" class="form-label"
+                          >Max Number of Files</label
+                        >
+                        <input
+                          type="number"
+                          class="form-control"
+                          id="maxFiles"
+                          placeholder="Enter max number of files"
+                        />
+                      </div>
+
+                      <!-- Max File Size -->
+                      <div class="mb-3">
+                        <label for="maxFileSize" class="form-label"
+                          >Max File Size (in MB)</label
+                        >
+                        <input
+                          type="number"
+                          class="form-control"
+                          id="maxFileSize"
+                          placeholder="Enter max file size in MB"
+                        />
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Required toggle -->
+                  <div class="form-check form-switch mb-3">
+                    <input class="form-check-input" type="checkbox" />
+                    <label class="form-check-label">Required</label>
+                  </div>
+                </div>
+
+                
+              </div>
+              <div id="formSections">
+
+              </div>
+              <!-- Add New Chapter Button -->
+              <button
+                type="button"
+                class="btn btn-outline-primary"
+                onclick="addNewChapter()"
+              >
+                + Add New Chapter
+              </button>
+
+              <!-- Submit Button -->
+              <!-- <button type="submit" class="btn btn-primary mt-3">Submit</button> -->
+            </form>
+            <!-- Form ends here -->
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Custom JS -->
+    <script src="script.js"></script>
+  </body>
+</html>
