@@ -1,195 +1,128 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Google Form Clone</title>
-    <!-- Bootstrap CSS -->
-    <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css"
-      rel="stylesheet"
-    />
-    <link rel="stylesheet" href="css/style.css" />
-  </head>
-  <body>
-    <div class="container">
-      <div class="row justify-content-center">
-        <div class="col-lg-8 col-md-10">
-          <div class="form-container">
-            <!-- Form starts here -->
-            <form id="googleForm">
-              <!-- First Form Section -->
-              <div id="">
-                <div class="form-section mb-4 p-3 border rounded">
-                  <!-- Delete Form Section -->
-                  <!-- <div class="text-end">
-                    <button
-                      type="button"
-                      class="btn btn-danger btn-sm"
-                      onclick="removeFormSection(this)"
-                    >
-                      <i class="bi bi-trash"></i> Delete
-                    </button>
-                  </div> -->
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Question Form</title>
+  <!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+  <!-- <style>
+    body {
+      background-color: #f4f5f7;
+    }
+    .form-container {
+      background-color: #fff;
+      padding: 40px;
+      border-radius: 10px;
+      box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+      margin-top: 50px;
+    }
+    .form-title {
+      color: #1967d2;
+      font-weight: bold;
+      margin-bottom: 30px;
+    }
+    .option-container {
+      margin-bottom: 20px;
+    }
+    .preview-img {
+      max-width: 100px;
+      max-height: 100px;
+      border-radius: 5px;
+    }
+    .file-preview-container img {
+      max-width: 100px;
+      max-height: 100px;
+    }
+  </style> -->
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container form-container">
+    <div id="">
+      <!-- Default First Question Section -->
+      <div class="form-section mb-4 p-3 border rounded">
+        
+        <div class="text-end">
+          <button
+            type="button"
+            class="btn btn-danger btn-sm"
+            onclick="removeFormSection(this)"
+          >
+            <i class="bi bi-trash"></i> Delete
+          </button>
+        </div>
 
-                  <!-- Answer Type Selection -->
-                  <div class="mb-3">
-                    <label for="answerType" class="form-label"
-                      >Answer Type</label
-                    >
-                    <div class="input-group mb-2">
-                      <!-- Text input for an addoption -->
-                      <input
-                        type="text"
-                        class="form-control"
-                        placeholder="Type your question here"
-                      />
-                    <select
-                      class="form-select answerType"
-                      onchange="changeInputType(this)"
-                    >
-                      <option value="multipleChoice" selected>
-                        Multiple choice
-                      </option>
-                      <option value="dropdown">Dropdown</option>
-                      <option value="fileUpload">File upload</option>
-                      <option value="linearScale">Linear scale</option>
-                    </select>
-                  </div>
+        <!-- Question Field -->
+        <div class="mb-3">
+          <label for="question" class="form-label">Question</label>
+          <input type="text" class="form-control" placeholder="Type your question here" />
+        </div>
 
-                  <!-- Option List -->
-                  <div class="mb-3 option-container">
-                    <label class="form-label">Options</label>
-                    <div class="optionList">
-                      <div class="input-group mb-2">
-                        <!-- Text input for an option -->
-                        <input
-                          type="text"
-                          class="form-control"
-                          placeholder="Option 1"
-                        />
+        <!-- Answer Type Selection -->
+        <div class="mb-3">
+          <label for="answerType" class="form-label">Answer Type</label>
+          <select class="form-select answerType" onchange="changeInputType(this)">
+            <option value="multipleChoice" selected>Multiple choice</option>
+            <option value="answerType">Answer Type</option>
+          </select>
+        </div>
 
-                        <!-- Button for file upload with a file icon -->
-                        <button
-                          class="btn btn-outline-secondary upload-btn"
-                          type="button"
-                          onclick="triggerFileUpload(this)"
-                        >
-                          <i class="bi bi-file-earmark-arrow-up"></i> Upload
-                        </button>
+        <!-- Option List (initially visible) -->
+        <div class="mb-3 option-container" >
+          <label class="form-label">Options</label>
+          <div class="optionList">
+            
+          </div>
+          <button
+            type="button"
+            class="btn btn-outline-primary"
+            onclick="addOption(this)"
+          >
+            + Add Option
+          </button>
+        </div>
 
-                        <!-- Hidden file input field for uploading a photo or file -->
-                        <input
-                        type="file"
-                        accept="image/*"
-                        class="file-input d-none"
-                          onchange="handleFileUpload(this)"
-                        />
-
-                        <!-- Remove button to delete option -->
-                        <button
-                          class="btn btn-outline-secondary"
-                          type="button"
-                          onclick="removeOption(this)"
-                        >
-                          Remove
-                        </button>
-                      </div>
-                    </div>
-                   
-                    <div class="file-preview-container mt-2"></div>
-                    <button
-                    type="button"
-                    class="btn btn-outline-primary"
-                    onclick="addOption(this)"
-                  >
-                    + Add Option
-                  </button> 
-                  </div>
-
-                  <!-- File Upload Section -->
-                  <div id="fileUploadSection" class="mb-3 d-none">
-                    <label class="form-label">File Upload</label>
-                    <div class="file-upload-container p-3 border rounded">
-                      <!-- File Uploader Logo -->
-                      <div class="file-uploader-logo text-center mb-3">
-                        <img
-                          src="path_to_your_file_upload_logo.png"
-                          alt="File Uploader"
-                          width="50px"
-                        />
-                      </div>
-
-                      <!-- File Input -->
-                      <input
-                        type="file"
-                        class="form-control mb-3"
-                        id="fileUpload"
-                        multiple
-                      />
-
-                      <!-- Max Number of Files -->
-                      <div class="mb-3">
-                        <label for="maxFiles" class="form-label"
-                          >Max Number of Files</label
-                        >
-                        <input
-                          type="number"
-                          class="form-control"
-                          id="maxFiles"
-                          placeholder="Enter max number of files"
-                        />
-                      </div>
-
-                      <!-- Max File Size -->
-                      <div class="mb-3">
-                        <label for="maxFileSize" class="form-label"
-                          >Max File Size (in MB)</label
-                        >
-                        <input
-                          type="number"
-                          class="form-control"
-                          id="maxFileSize"
-                          placeholder="Enter max file size in MB"
-                        />
-                      </div>
-                    </div>
-                  </div>
-
-                  <!-- Required toggle -->
-                  <div class="form-check form-switch mb-3">
-                    <input class="form-check-input" type="checkbox" />
-                    <label class="form-check-label">Required</label>
-                  </div>
-                </div>
-
-                
-              </div>
-              <div id="formSections">
-
-              </div>
-              <!-- Add New Chapter Button -->
-              <button
-                type="button"
-                class="btn btn-outline-primary"
-                onclick="addNewChapter()"
-              >
-                + Add New Chapter
-              </button>
-
-              <!-- Submit Button -->
-              <!-- <button type="submit" class="btn btn-primary mt-3">Submit</button> -->
-            </form>
-            <!-- Form ends here -->
+        <!-- File Upload Section (initially hidden) -->
+        <div class="mb-3 file-upload-section ">
+          <label class="form-label">Allow FIle Upload</label>
+          <div class="file-upload-container p-3 border rounded">
+            <select class="form-select answerType" onchange="changeFileUpload(this)">
+              <option value="yes" selected>Yes</option>
+              <option value="no">No</option>
+            </select>
+            <div class="mb-3  max-file">
+              <label for="maxFiles" class="form-label">Max Number of Files</label>
+              <input type ="number" class="form-control" id="maxFiles" placeholder="Enter max number of files" min="1" max="100" />
+            </div>
+            <div class="mb-3  max-size">
+              <label for="maxFileSize" class="form-label">Max File Size (in MB)</label>
+              <input type="number" class="form-control" id="maxFileSize" placeholder="Enter max file size in MB" min="1" max="100" />
+            </div>
           </div>
         </div>
+
+        <!-- Required toggle -->
+        <div class="form-check form-switch mb-3">
+          <input class="form-check-input" type="checkbox" />
+          <label class="form-check-label">Required</label>
+        </div>
       </div>
+
+      <div id="formSections"></div>
+
+      <button
+          type="button"
+          class="btn btn-outline-primary"
+          onclick="addNewChapter()"
+        >
+          + Add New Chapter
+        </button>
     </div>
+  </div>
 
-    <!-- Bootstrap JS -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
-
-    <!-- Custom JS -->
-    <script src="script.js"></script>
-  </body>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.1.3/js/bootstrap.bundle.min.js"></script>
+  <script src="script.js"></script> <!-- Link to your JavaScript file -->
+</body>
 </html>

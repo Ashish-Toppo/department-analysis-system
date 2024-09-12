@@ -21,3 +21,7 @@ body {
   max-height: 100px;
   border-radius: 5px;
 }
+
+.d-none{
+  display: none!important;
+}
