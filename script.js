@@ -8,78 +8,74 @@ function addNewChapter() {
 
   // Create the HTML structure for the new section
   newSection.innerHTML = `
-    <hr> <br> <br>
-    <div class="text-end">
-      <button
-        type="button"
-        class="btn btn-danger btn-sm"
-        onclick="removeFormSection(this)"
-      >
-        <i class="bi bi-trash"></i> Delete
-      </button>
-    </div>
-
-    <!-- Question Field -->
-    <div class="mb-3">
-      <label for="question" class="form-label">Question</label>
-      <input type="text" class="form-control" placeholder="Type your question here" />
-    </div>
-
-    <!-- Answer Type Selection -->
-    <div class="mb-3">
-      <label for="answerType" class="form-label">Answer Type</label>
-      <select class="form-select answerType" onchange="changeInputType(this)">
-        <option value="multipleChoice" selected>Multiple choice</option>
-        <option value="answerType">Answer Type</option>
-      </select>
-    </div>
-
-    <!-- Option List (conditionally visible) -->
-    <div class="mb-3 option-container d-none">
-      <label class="form-label">Options</label>
-      <div class="optionList">
-        <div class="input-group mb-2">
-          <input type="text" class="form-control" placeholder="Option 1" />
+    <br> <hr>
+    <div class="form-section mb-4 p-3 border rounded">
+        
+        <div class="text-end">
           <button
-            class="btn btn-outline-secondary"
             type="button"
-            onclick="removeOption(this)"
+            class="btn btn-danger btn-sm"
+            onclick="removeFormSection(this)"
           >
-            Remove
+            <i class="bi bi-trash"></i> Delete
           </button>
         </div>
-      </div>
-      <button
-        type="button"
-        class="btn btn-outline-primary"
-        onclick="addOption(this)"
-      >
-        + Add Option
-      </button>
-    </div>
 
-    <!-- File Upload Section (conditionally visible) -->
-    <div class="mb-3 file-upload-section d-none">
-      <label class="form-label">File Upload</label>
-      <div class="file-upload-container p-3 border rounded">
-        <input type="file" class="form-control mb-3" id="fileUpload" multiple />
-        <small class="form-text text-muted">Max 10MB per file, up to 10 files.</small>
+        <!-- Question Field -->
         <div class="mb-3">
-          <label for="maxFiles" class="form-label">Max Number of Files</label>
-          <input type="number" class="form-control" id="maxFiles" placeholder="Enter max number of files" min="1" max="10" />
+          <label for="question" class="form-label">Question</label>
+          <input type="text" class="form-control" placeholder="Type your question here" />
         </div>
+
+        <!-- Answer Type Selection -->
         <div class="mb-3">
-          <label for="maxFileSize" class="form-label">Max File Size (in MB)</label>
-          <input type="number" class="form-control" id="maxFileSize" placeholder="Enter max file size in MB" min="1" max="10" />
+          <label for="answerType" class="form-label">Answer Type</label>
+          <select class="form-control answerType" onchange="changeInputType(this)">
+            <option value="multipleChoice" selected>Multiple choice</option>
+            <option value="answerType">Answer Type</option>
+          </select>
+        </div>
+
+        <!-- Option List (initially visible) -->
+        <div class="mb-3 option-container" >
+          <label class="form-label">Options</label>
+          <div class="optionList">
+            
+          </div>
+          <button
+            type="button"
+            class="btn btn-outline-primary"
+            onclick="addOption(this)"
+          >
+            + Add Option
+          </button>
+        </div>
+
+        <!-- File Upload Section (initially hidden) -->
+        <div class="mb-3 file-upload-section ">
+          <label class="form-label">Allow FIle Upload</label>
+          <div class="file-upload-container p-3 border rounded">
+            <select class="form-control answerType" onchange="changeFileUpload(this)">
+              <option value="yes" selected>Yes</option>
+              <option value="no">No</option>
+            </select>
+            <div class="mb-3  max-file">
+              <label for="maxFiles" class="form-label">Max Number of Files</label>
+              <input type ="number" class="form-control" id="maxFiles" placeholder="Enter max number of files" min="1" max="100" />
+            </div>
+            <div class="mb-3  max-size">
+              <label for="maxFileSize" class="form-label">Max File Size (in MB)</label>
+              <input type="number" class="form-control" id="maxFileSize" placeholder="Enter max file size in MB" min="1" max="100" />
+            </div>
+          </div>
+        </div>
+
+        <!-- Required toggle -->
+        <div class="form-check form-switch mb-3">
+          <input class="form-check-input" type="checkbox" />
+          <label class="form-check-label">Required</label>
         </div>
       </div>
-    </div>
-
-    <!-- Required toggle -->
-    <div class="form-check form-switch mb-3">
-      <input class="form-check-input" type="checkbox" />
-      <label class="form-check-label">Required</label>
-    </div>
   `;
 
   // Append the new section to the form

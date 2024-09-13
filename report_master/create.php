@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Question Form</title>
+  <!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+  <!-- <style>
+    body {
+      background-color: #f4f5f7;
+    }
+    .form-container {
+      background-color: #fff;
+      padding: 40px;
+      border-radius: 10px;
+      box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+      margin-top: 50px;
+    }
+    .form-title {
+      color: #1967d2;
+      font-weight: bold;
+      margin-bottom: 30px;
+    }
+    .option-container {
+      margin-bottom: 20px;
+    }
+    .preview-img {
+      max-width: 100px;
+      max-height: 100px;
+      border-radius: 5px;
+    }
+    .file-preview-container img {
+      max-width: 100px;
+      max-height: 100px;
+    }
+  </style> -->
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container form-container">
+    <div id="">
+      
+
+      <div id="formSections"></div>
+
+      <br><br>
+      <button
+          type="button"
+          class="btn btn-outline-primary"
+          onclick="addNewChapter()"
+        >
+          + Add New Question
+        </button>
+    </div>
+  </div>
+
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.1.3/js/bootstrap.bundle.min.js"></script>
+  <script src="script.js"></script> <!-- Link to your JavaScript file -->
+</body>
+</html>
