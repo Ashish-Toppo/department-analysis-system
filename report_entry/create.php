@@ -8,11 +8,11 @@
 </head>
 <body>
     <div class="container">
-        <h1 class="text-center">GForm User Response</h1>
+        <h1 class="text-center">Department Assessment</h1>
         <div class="row">
             <div class="col-md-12">
                 <form id="response-form">
-                    <h2 id="form-title">Form 1: Contact Us</h2>
+                    <h2 id="form-title">Fill the Information</h2>
                     <div id="form-fields">
                         <div class="form-group">
                             <label for="name">Name</label>
