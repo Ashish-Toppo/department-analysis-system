@@ -41,3 +41,21 @@ function check_user_signin () {
         // do nothing for now
     }
 }
+
+// function to generate csrf token
+function generateCsrfToken() {
+    // Check if a token already exists, if not generate a new one
+    if (empty($_SESSION['csrf_token'])) {
+        // Generate a random token
+        $token = bin2hex(random_bytes(32)); // 32 bytes = 64 hex characters
+        // Store the token in the session
+        $_SESSION['csrf_token'] = $token;
+    }
+    return $_SESSION['csrf_token'];
+}
+
+// Function to verify the CSRF token from a form submission
+function verifyCsrfToken($token) {
+    return isset($_SESSION['csrf_token']) && hash_equals($_SESSION['csrf_token'], $token);
+}
+
