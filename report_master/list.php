@@ -10,6 +10,9 @@ include_once("../includes/functions.php");
 // check if the sigined in user is admin or not
 check_if_user_admin(); // destroy all session and redirect to signin page if the user is not admin 
 
+// fetch assessment details
+$assessments = fetch_query("SELECT * FROM `assessments` WHERE 1 ");
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -21,7 +24,7 @@ check_if_user_admin(); // destroy all session and redirect to signin page if the
 </head>
 <body>
     <div class="container">
-        <h1 class="text-center">GForm Admin Dashboard</h1>
+        <h1 class="text-center">Assessments</h1>
         <div class="row">
             <div class="col-md-12">
                 <table class="table table-striped">
@@ -32,28 +35,20 @@ check_if_user_admin(); // destroy all session and redirect to signin page if the
                         </tr>
                     </thead>
                     <tbody id="form-list">
-                        <tr>
-                            <td>Form 1: Contact Us</td>
-                            <td>
-                                <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#viewFormModal" data-form-id="1">View</button>
-                                <button class="btn btn-danger btn-sm" data-form-id="1">Delete</button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Form 2: Survey</td>
-                            <td>
-                                <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#viewFormModal" data-form-id="2">View</button>
-                                <button class="btn btn-danger btn-sm" data-form-id="2">Delete</button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Form 3: Registration</td>
-                            <td>
-                                <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#viewFormModal" data-form-id="3">View</button>
-                                <button class="btn btn-danger btn-sm" data-form-id="3">Delete</button>
-                            </td>
-                        </tr>
-                        <!-- more forms will be listed here -->
+
+                    <!-- print the column for each assessment -->
+                     <?php
+                        foreach($assessments as $assessment) {
+                            echo '<tr>
+                            <td> '. $assessment['id'] .': '. $assessment['name'] .' </td>
+                                <td>
+                                    <a class="btn btn-primary" href="./edit.php?id='. $assessment['id'] .'">View</a> 
+                                    <a class="btn btn-danger" href="./delete.php?id='. $assessment['id'] .'">Delete</a>
+                                </td>
+                            </tr>';
+                        }
+                     ?>
+                    
                     </tbody>
                 </table>
             </div>
