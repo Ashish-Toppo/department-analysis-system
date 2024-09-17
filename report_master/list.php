@@ -38,7 +38,7 @@ $csrfToken = generateCsrfToken();
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 24px;
+            font-size: 34px;
             box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
             text-decoration: none;
         }
@@ -63,15 +63,26 @@ $csrfToken = generateCsrfToken();
 
                     <!-- print the column for each assessment -->
                      <?php
-                        foreach($assessments as $assessment) {
-                            echo '<tr>
-                            <td> '. $assessment['id'] .': '. $assessment['name'] .' </td>
-                                <td>
-                                    <a class="btn btn-primary" href="./edit.php?id='. $assessment['id'] .'&csrf='. $csrfToken .'">Edit</a> 
-                                    <a class="btn btn-danger" href="./delete.php?id='. $assessment['id'] .'&csrf='. $csrfToken .'">Delete</a>
-                                </td>
-                            </tr>';
+
+                        if (count($assessments) > 0) {
+                            foreach($assessments as $assessment) {
+                                echo '<tr>
+                                    <td> '. $assessment['id'] .': '. $assessment['name'] .' </td>
+                                    <td>
+                                        <a class="btn btn-primary" href="./edit.php?id='. $assessment['id'] .'&csrf='. $csrfToken .'">Edit</a> 
+                                        <a class="btn btn-danger" href="./delete.php?id='. $assessment['id'] .'&csrf='. $csrfToken .'">Delete</a>
+                                    </td>
+                                </tr>';
+                            }
+                        } else {
+                            echo "
+                                <tr>
+                                    <td colspan='2' class='text-center'> No Records were found! </td>
+                                </tr>
+                            ";
                         }
+                     
+                        
                      ?>
                     
                     </tbody>
