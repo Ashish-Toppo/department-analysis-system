@@ -62,6 +62,40 @@ function fetch_query($query) {
 
 
 
+// function to delete record from a table
+function deleteRecord($id, $tableName, $conn) {
+    // Sanitize the table name to avoid SQL injection
+    $tableName = preg_replace('/[^a-zA-Z0-9_]+/', '', $tableName);
+
+    // Prepare the SQL DELETE statement dynamically
+    $sql = "DELETE FROM $tableName WHERE id = ?";
+
+    // Initialize a prepared statement
+    if ($stmt = $conn->prepare($sql)) {
+
+        // Bind the parameter to the statement (i.e., the id)
+        $stmt->bind_param("i", $id);  // "i" stands for integer
+
+        // Execute the statement
+        if ($stmt->execute()) {
+            // Check if any rows were affected
+            if ($stmt->affected_rows > 0) {
+                return true;  // Return true on success
+            } else {
+                return "No record found with the given ID in $tableName.";  // No record found
+            }
+        } else {
+            return "Error executing query: " . $stmt->error;  // Execution error
+        }
+
+        // Close the statement
+        $stmt->close();
+    } else {
+        return "Error preparing the query: " . $conn->error;  // Preparation error
+    }
+}
+
+
 
 
 
