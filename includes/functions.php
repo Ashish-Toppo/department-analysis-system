@@ -5,14 +5,14 @@
 
 // function to check if the signed in user is admin
 function check_if_user_admin () {
-    if (!isset($_SESSION['username'])) {
+    if (!isset($_SESSION['role'])) {
         $_SESSION = []; // empty the session if it has any data
         header('location: ../signin.php'); // redirect to signin page
 
         die; // stop furthur execution of the page
     }
 
-    else if ($_SESSION['username'] !== 'admin') {
+    else if ($_SESSION['role'] !== 'admin') {
         $_SESSION = []; // empty the session if it has any data
         header('location: ../signin.php'); // redirect to signin page
 
@@ -57,5 +57,11 @@ function generateCsrfToken() {
 // Function to verify the CSRF token from a form submission
 function verifyCsrfToken($token) {
     return isset($_SESSION['csrf_token']) && hash_equals($_SESSION['csrf_token'], $token);
+}
+
+
+// Function to generate a unique ID
+function generateUniqueId() {
+    return uniqid(rand(), true);  // Generates a unique ID based on current time and a random number
 }
 

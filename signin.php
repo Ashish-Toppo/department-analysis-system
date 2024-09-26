@@ -1,7 +1,8 @@
 <?php
 
-// Start the session
-session_start();
+// include all necessary files
+include_once('./_load_all.php');
+
 
 // If the user is already logged in, redirect them to the dashboard
 if (isset($_SESSION['username'])) {
@@ -26,14 +27,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $error = "Please fill out both fields.";
     } else {
         // Prepare a statement to check the username in the database
-        $stmt = $conn->prepare("SELECT id, username, pswd FROM departments WHERE username = ?");
+        $stmt = $conn->prepare("SELECT id, username, pswd, 'role' FROM departments WHERE username = ?");
         $stmt->bind_param("s", $username);
         $stmt->execute();
         $stmt->store_result();
         
         // Check if the username exists in the database
         if ($stmt->num_rows > 0) {
-            $stmt->bind_result($id, $usernameFromDb, $hashedPasswordFromDb);
+            $stmt->bind_result($id, $usernameFromDb, $hashedPasswordFromDb, $roleFromDb);
             $stmt->fetch();
 
             // Verify the password
@@ -41,6 +42,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 // Password is correct, set the session and redirect to dashboard
                 $_SESSION['user_id'] = $id;
                 $_SESSION['username'] = $usernameFromDb;
+                $_SESSION['role'] = $roleFromDb;
                 header("Location: router.php");
                 exit;
             } else {
